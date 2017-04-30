@@ -5,8 +5,7 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
-    tools:background="@drawable/home_background"
+    android:background="@drawable/home_background"
     tools:context="com.studionobume.musicalgoogle.MainActivity">
 
     <ImageView
@@ -27,25 +26,22 @@
     <SearchView
         android:layout_width="359dp"
         android:layout_height="55dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteX="17dp" />
+        app:layout_constraintHorizontal_bias="0.888" />
 
     <FrameLayout
         android:id="@+id/frame"
-        android:layout_width="315dp"
-        android:layout_height="460dp"
+        android:layout_width="361dp"
+        android:layout_height="464dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="7dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="63dp"
-        app:layout_constraintHorizontal_bias="0.422"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
