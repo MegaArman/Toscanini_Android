@@ -2,4 +2,12 @@
     <string name="app_name">Toscanini Andriod</string>
     <string name="app_label">Toscanini Andriod</string>
     <string name="search_hint">Flute D4 C#</string>
+    <string name="URL">http://mickey.cs.vt.edu:1867/</string>
+    <string name="past_queries">Past Queries</string>
+    <string name="past_sheets">Past Sheets</string>
+    <string name="home">Home</string>
+    <string name="speech_prompt">Ask your query!</string>
+    <string name="error">Your device does not support speech recognition.</string>
+    <string name="tap_on_mic">Tap on mic to speak!</string>
+    <string name="search_label">Queries</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.studionobume.musicalgoogle;
 
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -11,15 +14,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.studionobume.musicalgoogle.Fragments.HomeScreenFragment;
 import com.studionobume.musicalgoogle.Fragments.QueryFragment;
 import com.studionobume.musicalgoogle.Fragments.SheetFragment;
 import com.studionobume.musicalgoogle.Fragments.TaskFragment;
 import com.studionobume.musicalgoogle.Interactions.HomeScreenInteraction;
+import com.studionobume.musicalgoogle.Interactions.QueryFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.RetainedFragmentInteraction;
+import com.studionobume.musicalgoogle.Interactions.SheetFragmentInteraction;
 
-public class MainActivity extends AppCompatActivity implements HomeScreenInteraction{
+public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, QueryFragmentInteraction, SheetFragmentInteraction {
 
     private Fragment homeScreenFragment,taskFragment, sheetFragment , queryFragment;
 
@@ -58,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         } else {
             // Get referencecs to the fragments if they existed, null otherwise
             sheetFragment = fragmentManager.findFragmentByTag(SheetFragment.TAG_SHEET_FRAGMENT);
-            ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(QueryFragment.TAG_QUERY_FRAGMENT);
             queryFragment = fragmentManager.findFragmentByTag(QueryFragment.TAG_QUERY_FRAGMENT);
+            ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(QueryFragment.TAG_QUERY_FRAGMENT);
         }
     }
 
@@ -73,8 +79,16 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("Queries", "The voice gave me: " + query);
+        }
     }
 
     @Override
@@ -83,41 +97,41 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-    /*
-        if (id == R.id.action_settings) {
-
+        if (id == R.id.past_Queries) {
+            this.changeFragment(QueryFragment.TAG_QUERY_FRAGMENT);
+            Log.d("Home", "Switching to QueryFragment");
         }
-        else if (id == R.id.action_message) {
-
+        if(id == R.id.past_Sheets) {
+            this.changeFragment(SheetFragment.TAG_SHEET_FRAGMENT);
+            Log.d("Home", "Switching to SheetFragment");
         }
-
-        else if (id == R.id.action_logout) {
-
+        if(id == R.id.home) {
+            this.changeFragment(HomeScreenFragment.TAG_HOME_FRAGMENT);
+            Log.d("Home", "Switching to HomeFragment");
         }
-        */
-
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void changeFragment(String fragment_name) {
         Fragment fragment;
         Class fragmentClass = null;
         if(fragment_name.equals(SheetFragment.TAG_SHEET_FRAGMENT)){
             fragmentClass = SheetFragment.class;
-            Log.d("Home", "sheetfragment selected");
+            Log.d("Fragment", "sheetfragment selected");
         }
         else if(fragment_name.equals(QueryFragment.TAG_QUERY_FRAGMENT)){
             fragmentClass = QueryFragment.class;
-            Log.d("HW2", "queryfragment selected");
+            Log.d("Fragment", "queryfragment selected");
+        }
+        else if(fragment_name.equals(HomeScreenFragment.TAG_HOME_FRAGMENT)) {
+            fragmentClass = HomeScreenFragment.class;
+            Log.d("Fragment", "homeFragment selected");
         }
 
         try {
             if (fragmentClass != null) {
                 fragment = (Fragment) fragmentClass.newInstance();
-
                 FragmentTransaction ft= fragmentManager.beginTransaction();
-
                 ft.replace(R.id.frame, fragment,
                         ((RetainedFragmentInteraction)taskFragment).getActiveFragmentTag());
                 ft.addToBackStack(null);
@@ -126,6 +140,5 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
