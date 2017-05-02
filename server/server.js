@@ -27,6 +27,10 @@ function onRequest(request, response)
       response.writeHead(200, {"Content-Type": "application/json"});
 		  
 			const query = createQuery(request.url.split("/?=")[1]);
+      if (query === false)
+      {
+        response.end("Query has a formatting error, please fix");
+      }
       console.log("GET query", query);
       const pdfNames = searchFacts(query).map((xml) => xml.replace("xml", "pdf"));
      
