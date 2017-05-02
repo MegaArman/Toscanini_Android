@@ -3,6 +3,7 @@ package com.studionobume.musicalgoogle.Fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.CursorLoader;
@@ -23,6 +24,8 @@ import com.studionobume.musicalgoogle.Database.DBConstants;
 import com.studionobume.musicalgoogle.Database.DBController;
 import com.studionobume.musicalgoogle.Database.QueryDatabase;
 import com.studionobume.musicalgoogle.Interactions.QueryFragmentInteraction;
+import com.studionobume.musicalgoogle.MainActivity;
+import com.studionobume.musicalgoogle.MyApplication;
 import com.studionobume.musicalgoogle.R;
 
 import java.util.ArrayList;
@@ -84,6 +87,7 @@ public class QueryFragment extends Fragment {
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -105,11 +109,16 @@ public class QueryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.all_query_layout, container, false);
+
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextView queryTV = (TextView) view.findViewById(R.id.queryView2);
+        queryTV.setText(PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext())
+                .getString("newFiles", "defaultStringIfNothingFound"));
     }
 }

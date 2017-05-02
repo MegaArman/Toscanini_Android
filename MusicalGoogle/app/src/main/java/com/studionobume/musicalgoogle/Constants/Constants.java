@@ -6,4 +6,5 @@ package com.studionobume.musicalgoogle.Constants;
 
 public class Constants {
     public static String url = "http://mickey.cs.vt.edu:8001/?=";
+    public static String newFiles = "http://mickey.cs.vt.edu:8001/newfiles";
 }
