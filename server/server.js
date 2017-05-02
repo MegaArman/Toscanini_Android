@@ -30,11 +30,10 @@ function onRequest(request, response)
       if (query === false)
       {
         response.end("Query has a formatting error, please fix");
+        return;
       }
       console.log("GET query", query);
       const pdfNames = searchFacts(query).map((xml) => xml.replace("xml", "pdf"));
-     
-      console.log("Serving...", JSON.stringify(pdfNames));
  			response.end(JSON.stringify(pdfNames));  
     }
     else if (request.url ==="/materialize.css")

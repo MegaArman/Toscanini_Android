@@ -62,7 +62,6 @@ function noteOctaveToMIDI(noteOctave)
 module.exports = (searchString) =>
 {
   searchString = searchString.replace(/_/g, " ");
-  console.log("newsearchstring after replace", searchString);
   const queries = {};
   let errorString = "bad query";
   let validQuery = true;
@@ -74,7 +73,6 @@ module.exports = (searchString) =>
     return (query.replace(/\s+/g, " ").trim().split(" "));
   });
 
-  console.log("inputMatrx", inputMatrix);
   inputMatrix.forEach((queryPart) => 
   { 
     //composer
@@ -108,14 +106,12 @@ module.exports = (searchString) =>
       queries["key"] = (queryPart[1].length === 2) ? 
                        keyWithoutAccidental + queryPart[1].charAt(1) : keyWithoutAccidental;
 
-      console.log("post insert key", queries);
       return;
     }
 
     if (queryPart.length !== 3)
     {
       validQuery = false;
-      console.log("bad string " + queryPart);
       errorString = ("query starting with " + queryPart[0] + " is not of appropriate length- see instructions");
       return;
     }
@@ -166,7 +162,6 @@ module.exports = (searchString) =>
 
     //perform the insertion
     queries[instrumentName] = {"minPitch": minPitch, "maxPitch": maxPitch};
-    console.log("post insert instrument", queries); 
   });
  
   if (validQuery)
