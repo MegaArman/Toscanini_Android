@@ -76,8 +76,9 @@ function onRequest(request, response)
 			response.writeHead(200, {"Content-Type": "text/plain"});
 		  
 			const query = (requestBody === "lucky") ? "lucky" : JSON.parse(requestBody);
-			response.end(JSON.stringify(searchFacts(query)));
-      
+      const pdfNames = searchFacts(query).map((xml) => xml.replace("xml", "pdf"));
+
+			response.end(JSON.stringify(pdfNames)); 
 		});
 	}
 	else
