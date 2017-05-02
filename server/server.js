@@ -2,6 +2,7 @@
 const http = require("http");
 const fs = require("fs");
 const searchFacts = require("./searchFacts");
+const createQuery = require("./createQuery");
 const port = 8001;
 
 function send404Response(response)
@@ -25,7 +26,7 @@ function onRequest(request, response)
       console.log("query!");
       response.writeHead(200, {"Content-Type": "application/json"});
 		  
-			const query = request.url.split("/?=")[1];
+			const query = createQuery(request.url.split("/?=")[1]);
       console.log("GET query", query);
       const pdfNames = searchFacts(query).map((xml) => xml.replace("xml", "pdf"));
      
