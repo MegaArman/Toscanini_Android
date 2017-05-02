@@ -6,6 +6,5 @@ package com.studionobume.musicalgoogle.Interactions;
 
 public interface HomeScreenInteraction {
     void changeFragment(String fragment_name);
-    String getActivityData();
     void setActivityData(String actual);
 }

@@ -16,7 +16,7 @@ public class QueryDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " +
             DBConstants.TABLE_NAME + "( " +
-            DBConstants.COLUMN_NAME_ENTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMNT, " +
+            DBConstants.COLUMN_NAME_ENTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DBConstants.COLUMN_NAME_ENTRY_DATE + " TEXT, " +
             DBConstants.COLUMN_NAME_QUERY + " TEXT);";
 

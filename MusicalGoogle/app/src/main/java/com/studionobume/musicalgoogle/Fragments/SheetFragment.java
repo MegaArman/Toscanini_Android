@@ -1,6 +1,8 @@
 package com.studionobume.musicalgoogle.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,7 +39,7 @@ import static com.studionobume.musicalgoogle.Constants.Constants.url;
  * Created by Togame on 4/30/2017.
  */
 
-public class SheetFragment extends Fragment {
+public class SheetFragment extends Fragment implements ListView.OnItemClickListener{
     public static final String TAG_SHEET_FRAGMENT = "SHEET";
     private SheetFragmentInteraction activity;
     private ArrayList<String> urls;
@@ -44,6 +47,11 @@ public class SheetFragment extends Fragment {
     private TextView textView;
     private URLArrayAdapter urlArrayAdapter;
     private NetWorker netWorker;
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 
     private class URLArrayAdapter extends ArrayAdapter<String> {
         private final Context context;
@@ -140,6 +148,18 @@ public class SheetFragment extends Fragment {
 
                 urlArrayAdapter= new URLArrayAdapter(getActivity(), R.layout.sheet_layout, urls);
                 urlList.setAdapter(urlArrayAdapter);
+                urlList.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                        String item = urlList.getItemAtPosition(position).toString();
+                        Log.d("String", item);
+                        activity.setUrl(item);
+                        String url = Constants.url.replace("/?=", "") +"/pdf_scores/" + activity.getUrl();
+                        Log.d("String", url);
+                        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(launchBrowser);
+                    }
+                });
             }
 
             @Override

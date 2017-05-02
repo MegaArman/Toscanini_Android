@@ -2,10 +2,7 @@ package com.studionobume.musicalgoogle;
 
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
 
 import com.studionobume.musicalgoogle.Fragments.HomeScreenFragment;
 import com.studionobume.musicalgoogle.Fragments.QueryFragment;
@@ -31,8 +27,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
     private FragmentManager fragmentManager;
     private String query;
-    public static final int READ_TIMEOUT_MS = 20000;
-    public static final int CONNECT_TIMEOUT_MS = 20000;
+    private String actual_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
             setActivityData(query);
+            sendBroadcast(intent);
             Log.d("Queries", "The voice gave me: " + query);
             FragmentTransaction fragTrans = fragmentManager.beginTransaction();
             fragTrans.replace(R.id.frame, new SheetFragment(),
@@ -143,8 +139,18 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         }
     }
 
+    @Override
+    public String getUrl() {
+        return actual_url;
+    }
+
     public void setActivityData(String actual) {
         query = actual;
+    }
+
+    @Override
+    public void setUrl(String url) {
+        actual_url = url;
     }
 
     public String getActivityData() {
