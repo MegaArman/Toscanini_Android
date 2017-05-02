@@ -74,14 +74,11 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
 
     @Override
     public void startBackgroundServiceNeeded() {
-
-
         // check if the background service is running, if not then start it
         if (!isBackgroundServiceRunning()) {
             Intent intent = new Intent(getActivity(), BackgroundService.class);
             getActivity().startService(intent);
             Log.d("background_service", "BackgroundService  TOLD TO START!");
-
         }
 
     }

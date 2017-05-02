@@ -9,11 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.studionobume.musicalgoogle.Interactions.HomeScreenInteraction;
 import com.studionobume.musicalgoogle.R;
@@ -24,7 +27,7 @@ import static android.support.v4.media.session.MediaButtonReceiver.handleIntent;
  * Created by Togame on 4/30/2017.
  */
 
-public class HomeScreenFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class HomeScreenFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     public static final String TAG_HOME_FRAGMENT = "HOME";
 
@@ -82,7 +85,5 @@ public class HomeScreenFragment extends Fragment implements SearchView.OnQueryTe
     public boolean onQueryTextChange(String newText) {
         return false;
     }
-
-
 
 }

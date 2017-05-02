@@ -5,7 +5,7 @@ package com.studionobume.musicalgoogle.Database;
  */
 
 public class DBConstants {
-    public static final String TABLE_NAME = "PAST QUERIES";
+    public static final String TABLE_NAME = "PAST_QUERIES";
 
     //primary key
     public static final String COLUMN_NAME_ENTRY_ID = "id";

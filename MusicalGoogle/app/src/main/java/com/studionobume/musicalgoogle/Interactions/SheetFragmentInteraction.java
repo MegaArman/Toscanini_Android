@@ -7,4 +7,6 @@ package com.studionobume.musicalgoogle.Interactions;
 public interface SheetFragmentInteraction {
     void changeFragment(String fragment_name);
     String getActivityData();
+    void setUrl(String url);
+    String getUrl();
 }
