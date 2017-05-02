@@ -21,6 +21,11 @@ function onRequest(request, response)
 				response.writeHead(200, {"Content-Type": "text/html"});
 				fs.createReadStream("./index.html").pipe(response);
 		}
+    else if (request.url === "/newfiles")
+    {
+        response.writeHead(200, {"Content-Type": "text"});
+				fs.createReadStream("./newfiles.txt").pipe(response);
+    }
     else if (request.url.includes("/?="))
     {
       console.log("query!");
@@ -54,12 +59,15 @@ function onRequest(request, response)
     else if (request.url.includes("/pdf_scores/")
              && request.url.includes(".pdf"))
     {
+      console.log("pdf requested!");
       const score = request.url.replace("/pdf_scores/", "");
+      console.log("score is ", score);
       const readStream = fs.createReadStream("./pdf_scores/" + score);
-      
+       
       readStream.on("open", ()=>
       {
-        response.writeHead(200, {"Content-Type": "text/xml"});
+        console.log("about to stream");
+        response.writeHead(200, {"Content-Type": "text/pdf"});
         readStream.pipe(response);
       });
 
@@ -72,6 +80,8 @@ function onRequest(request, response)
     {
       send404Response(response);
     }
+
+    return;
 	}
 	else if (request.method === "POST")
 	{
