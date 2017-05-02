@@ -107,7 +107,11 @@ public class SheetFragment extends Fragment {
         params.put("composer", "");
 
 
-        String enteredQuery = activity.getActivityData().toString();
+        String enteredQuery = "";
+        if (activity.getActivityData() != null)
+            enteredQuery = activity.getActivityData().toString();
+
+
         String completeURL = "";
         if (!enteredQuery.isEmpty()) {
             completeURL = Constants.url + enteredQuery.replace(" ", "_");
