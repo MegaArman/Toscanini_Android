@@ -189,7 +189,7 @@ $("#ask").on("click", ()=>
 
         scores.forEach((scoreName) =>
         {
-          $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
+          $("#matchingScores").append("<a href='./pdf_scores/" + scoreName + "'" +  
             "class='download collection-item'" + "download>" + scoreName + "</a>"); 
         });
       },      
@@ -213,7 +213,7 @@ $("#lucky").on("click", () =>
 
       const scoreName = JSON.parse(scoresJSON);
  
-      $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
+      $("#matchingScores").append("<a href='./pdf_scores/" + scoreName + "'" +  
         "class='download collection-item'" + "download>" + scoreName + "</a>"); 
     },      
     error: () => alert("no response from server")

@@ -20,6 +20,18 @@ function onRequest(request, response)
 				response.writeHead(200, {"Content-Type": "text/html"});
 				fs.createReadStream("./index.html").pipe(response);
 		}
+    else if (request.url.includes("/?="))
+    {
+      console.log("query!");
+      response.writeHead(200, {"Content-Type": "application/json"});
+		  
+			const query = request.url.split("/?=")[1];
+      console.log("GET query", query);
+      const pdfNames = searchFacts(query).map((xml) => xml.replace("xml", "pdf"));
+     
+      console.log("Serving...", JSON.stringify(pdfNames));
+ 			response.end(JSON.stringify(pdfNames));  
+    }
     else if (request.url ==="/materialize.css")
     {
     	response.writeHead(200, {"Content-Type": "text/css"});
@@ -35,11 +47,11 @@ function onRequest(request, response)
       response.writeHead(200, {"Content-Type": "text/javascript"});
 			fs.createReadStream("./osmd.min.js").pipe(response);
     }
-    else if (request.url.includes("/scores/")
-             && request.url.includes(".xml"))
+    else if (request.url.includes("/pdf_scores/")
+             && request.url.includes(".pdf"))
     {
-      const score = request.url.replace("/scores/", "");
-      const readStream = fs.createReadStream("./scores/" + score);
+      const score = request.url.replace("/pdf_scores/", "");
+      const readStream = fs.createReadStream("./pdf_scores/" + score);
       
       readStream.on("open", ()=>
       {
@@ -73,12 +85,12 @@ function onRequest(request, response)
 		request.on("end", ()=> 
 		{
 			console.log("requestBody", requestBody);
-			response.writeHead(200, {"Content-Type": "text/plain"});
+			response.writeHead(200, {"Content-Type": "application/json"});
 		  
 			const query = (requestBody === "lucky") ? "lucky" : JSON.parse(requestBody);
       const pdfNames = searchFacts(query).map((xml) => xml.replace("xml", "pdf"));
-
-			response.end(JSON.stringify(pdfNames)); 
+      console.log("Serving...", JSON.stringify(pdfNames));
+ 			response.end(JSON.stringify(pdfNames)); 
 		});
 	}
 	else
