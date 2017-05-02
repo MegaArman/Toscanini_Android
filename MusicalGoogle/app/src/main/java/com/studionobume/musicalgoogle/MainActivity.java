@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
     private Fragment homeScreenFragment,taskFragment, sheetFragment , queryFragment;
 
-    private SharedPreferences prefs;
     private FragmentManager fragmentManager;
+    private String query;
     public static final int READ_TIMEOUT_MS = 20000;
     public static final int CONNECT_TIMEOUT_MS = 20000;
 
@@ -39,11 +39,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        if(prefs.getString("push","").equals("True")){
-            Log.d("Home","Wants Push Notifications.");
-        }
 
         //Check if server is up and running otherwise inform user
         Log.d("Home", "Create the taskFragment.");
@@ -86,8 +81,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     @Override
     protected void onNewIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            query = intent.getStringExtra(SearchManager.QUERY);
+            setActivityData(query);
             Log.d("Queries", "The voice gave me: " + query);
+            FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+            fragTrans.replace(R.id.frame, new SheetFragment(),
+                    ((RetainedFragmentInteraction)taskFragment).getActiveFragmentTag());
+            fragTrans.addToBackStack(null);
+            fragTrans.commitAllowingStateLoss();
         }
     }
 
@@ -140,5 +141,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setActivityData(String actual) {
+        query = actual;
+    }
+
+    public String getActivityData() {
+        return query;
     }
 }

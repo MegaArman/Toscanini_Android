@@ -10,4 +10,5 @@
     <string name="error">Your device does not support speech recognition.</string>
     <string name="tap_on_mic">Tap on mic to speak!</string>
     <string name="search_label">Queries</string>
+    <string name="save_query">SAVEQUERY!</string>
 </resources>
