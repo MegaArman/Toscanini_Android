@@ -90,16 +90,16 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View completeView = inflater.inflate(R.layout.all_sheet_layout, container, false);
-        TextView textView = (TextView) completeView.findViewById(R.id.queryView);
+        TextView queryTV = (TextView) completeView.findViewById(R.id.queryView);
 
         String temp = activity.getActivityData();
 
         //TODO:
         if(temp == null) {
-            textView.setText("No Query Entered.");
+            queryTV.setText("No Query Entered.");
         }
         else {
-            textView.setText(temp);
+            queryTV.setText("Showing results for " + temp);
         }
         return completeView;
     }
@@ -115,8 +115,13 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
         params.put("composer", "");
 
 
-        String enteredQuery = activity.getActivityData().toString();
+        String enteredQuery = "";
         String completeURL = "";
+
+        if (activity.getActivityData() != null) {
+            enteredQuery = activity.getActivityData().toString();
+        }
+
         if (!enteredQuery.isEmpty()) {
             completeURL = Constants.url + enteredQuery.replace(" ", "_");
         }

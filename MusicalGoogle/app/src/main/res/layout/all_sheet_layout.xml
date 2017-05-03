@@ -12,18 +12,10 @@
         android:layout_height="63dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="1dp"
+        android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="119dp"
-        android:layout_marginTop="458dp"
-        android:text="@string/save_query"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/queryView" />
 
     <ListView
         android:id="@+id/all_urls"
