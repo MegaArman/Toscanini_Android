@@ -8,38 +8,21 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.studionobume.musicalgoogle.Constants.Constants;
 import com.studionobume.musicalgoogle.Database.DBController;
-import com.studionobume.musicalgoogle.Fragments.SheetFragment;
 import com.studionobume.musicalgoogle.MainActivity;
 import com.studionobume.musicalgoogle.MyApplication;
 import com.studionobume.musicalgoogle.Networking.NetWorker;
-import com.studionobume.musicalgoogle.Networking.SocketIO;
 import com.studionobume.musicalgoogle.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
-
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 
 /**
  * Created by Togame on 4/30/2017.
