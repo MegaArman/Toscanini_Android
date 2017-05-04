@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
+
+
+
         //Check if server is up and running otherwise inform user
         Log.d("Home", "Create the taskFragment.");
         taskFragment = (TaskFragment) fragmentManager.findFragmentByTag(TaskFragment.TAG_TASK_FRAGMENT);
@@ -56,6 +59,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             sheetFragment = fragmentManager.findFragmentByTag(SheetFragment.TAG_SHEET_FRAGMENT);
             queryFragment = fragmentManager.findFragmentByTag(QueryFragment.TAG_QUERY_FRAGMENT);
             ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(QueryFragment.TAG_QUERY_FRAGMENT);
+        }
+        if(getIntent().getAction().equals("OPEN_RECENTLY_ADDED")) {
+            this.changeFragment(QueryFragment.TAG_QUERY_FRAGMENT);
+        }
+        else {
+            Log.d("the intent", "was "  + getIntent().getAction());
         }
     }
 

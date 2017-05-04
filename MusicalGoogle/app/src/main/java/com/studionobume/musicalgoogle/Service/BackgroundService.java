@@ -1,5 +1,7 @@
 package com.studionobume.musicalgoogle.Service;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -10,6 +12,8 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import com.studionobume.musicalgoogle.Constants.Constants;
 import com.studionobume.musicalgoogle.Database.DBController;
 import com.studionobume.musicalgoogle.Fragments.SheetFragment;
+import com.studionobume.musicalgoogle.MainActivity;
 import com.studionobume.musicalgoogle.MyApplication;
 import com.studionobume.musicalgoogle.Networking.NetWorker;
 import com.studionobume.musicalgoogle.Networking.SocketIO;
@@ -104,6 +109,37 @@ public class BackgroundService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            Log.d("recieved", "recieved");
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.ic_a_c_d_notes)
+                            .setContentTitle("My notification")
+                            .setContentText("Hello World!");
+// Creates an explicit intent for an Activity in your app
+            Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+            resultIntent.setAction("OPEN_RECENTLY_ADDED");
+            PendingIntent.getService(getApplicationContext(), 0, resultIntent, 0);
+// The stack builder object will contain an artificial back stack for the
+// started Activity.
+// This ensures that navigating backward from the Activity leads out of
+// your application to the Home screen.
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+// Adds the back stack for the Intent (but not the Intent itself)
+            stackBuilder.addParentStack(MainActivity.class);
+// Adds the Intent that starts the Activity to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+            PendingIntent resultPendingIntent =
+                    stackBuilder.getPendingIntent(
+                            0,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+
+            mBuilder.setContentIntent(resultPendingIntent);
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
+            mNotificationManager.notify(0, mBuilder.build());
+
             if (action.contains(Intent.ACTION_TIME_TICK)) {
 
             }
