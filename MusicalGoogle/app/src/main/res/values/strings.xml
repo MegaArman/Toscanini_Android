@@ -12,4 +12,5 @@
     <string name="search_label">Queries</string>
     <string name="save_query">SAVEQUERY!</string>
     <string name="add">Add</string>
+    <string name="instruct">Instructions</string>
 </resources>

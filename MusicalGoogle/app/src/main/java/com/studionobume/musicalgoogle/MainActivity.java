@@ -3,6 +3,7 @@ package com.studionobume.musicalgoogle;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -27,7 +28,6 @@ import com.studionobume.musicalgoogle.Interactions.SheetFragmentInteraction;
 public class MainActivity extends AppCompatActivity implements AliasFragmentInteraction, HomeScreenInteraction, QueryFragmentInteraction, SheetFragmentInteraction {
 
     private Fragment homeScreenFragment,taskFragment, sheetFragment , queryFragment;
-
     private FragmentManager fragmentManager;
     private String query;
     private String actual_url;
@@ -116,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements AliasFragmentInte
         if(id == R.id.home) {
             this.changeFragment(HomeScreenFragment.TAG_HOME_FRAGMENT);
             Log.d("Home", "Switching to HomeFragment");
+        }
+        if(id == R.id.Instructions) {
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.INSTRUCTION_URL));
+            startActivity(launchBrowser);
         }
         return super.onOptionsItemSelected(item);
     }
