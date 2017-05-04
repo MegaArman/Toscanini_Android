@@ -5,7 +5,7 @@
     android:id="@+id/queryView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/query_background">
+    android:background="@drawable/toscanini">
 
     <TextView
         android:id="@+id/queryView2"
@@ -13,7 +13,9 @@
         android:layout_height="197dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="18sp"
+        android:fontFamily="cursive"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
