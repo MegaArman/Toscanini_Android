@@ -6,23 +6,25 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.studionobume.musicalgoogle.Constants.Constants;
+import com.studionobume.musicalgoogle.Fragments.AliasFragment;
 import com.studionobume.musicalgoogle.Fragments.HomeScreenFragment;
 import com.studionobume.musicalgoogle.Fragments.QueryFragment;
 import com.studionobume.musicalgoogle.Fragments.SheetFragment;
 import com.studionobume.musicalgoogle.Fragments.TaskFragment;
+import com.studionobume.musicalgoogle.Interactions.AliasFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.HomeScreenInteraction;
 import com.studionobume.musicalgoogle.Interactions.QueryFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.RetainedFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.SheetFragmentInteraction;
 
-public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, QueryFragmentInteraction, SheetFragmentInteraction {
+public class MainActivity extends AppCompatActivity implements AliasFragmentInteraction, HomeScreenInteraction, QueryFragmentInteraction, SheetFragmentInteraction {
 
     private Fragment homeScreenFragment,taskFragment, sheetFragment , queryFragment;
 
