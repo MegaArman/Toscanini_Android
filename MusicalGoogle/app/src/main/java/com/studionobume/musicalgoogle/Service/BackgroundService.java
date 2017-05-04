@@ -60,38 +60,8 @@ public class BackgroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         IntentFilter filter = new IntentFilter(Intent.ACTION_TIME_TICK);
-
         registerReceiver(receiver, filter);
-
         Log.d("background_service", "BackgroundService has Started!");
-
-//        database_controller = new DBController(getApplication(), this, getApplication());
-//        database_controller.OpenDB();
-
-        NetWorker nw = NetWorker.getSInstance();
-        nw.get(Constants.newFiles, new NetWorker.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("success", result);
-                if (result.contains("error")) {
-                    Toast.makeText(MyApplication.getAppContext(), "Toscanini says: " + result, Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext())
-                        .edit().putString("newFiles", result).commit();
-
-                Log.d("newFiles prefs", PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext())
-                        .getString("newFiles", "defaultStringIfNothingFound"));
-            }
-
-            @Override
-            public void onFailure(String result) {
-                Log.d("failure", result);
-            }
-        });
-
-
         return Service.START_STICKY;
     }
 
@@ -101,7 +71,6 @@ public class BackgroundService extends Service {
         unregisterReceiver(receiver);
         database_controller.CloseDB();
         database_controller = null;
-
         super.onDestroy();
     }
 
@@ -110,41 +79,63 @@ public class BackgroundService extends Service {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.d("recieved", "recieved");
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.ic_a_c_d_notes)
-                            .setContentTitle("My notification")
-                            .setContentText("Hello World!");
+
+            //check if there's new music:
+            NetWorker nw = NetWorker.getSInstance();
+            nw.get(Constants.newFiles, new NetWorker.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.d("success", result);
+                    String oldstring = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext())
+                            .getString("newFiles", "defaultStringIfNothingFound");
+
+                    if (!oldstring.equals(result)) {
+                        PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext())
+                                .edit().putString("newFiles", result).commit();
+                        notifyNewScores();
+                    }
+                }
+
+                @Override
+                public void onFailure(String result) {
+                    Log.d("failure", result);
+                }
+            });
+        }
+    };
+
+    public void notifyNewScores() {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getApplicationContext())
+                        .setSmallIcon(R.drawable.ic_a_c_d_notes)
+                        .setContentTitle("Toscanini")
+                        .setContentText("New scores added! Tap to see which!")
+                        .setAutoCancel(true);
 // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-            resultIntent.setAction("OPEN_RECENTLY_ADDED");
-            PendingIntent.getService(getApplicationContext(), 0, resultIntent, 0);
+        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+        resultIntent.setAction("OPEN_RECENTLY_ADDED");
+        PendingIntent.getService(getApplicationContext(), 0, resultIntent, 0);
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
 // This ensures that navigating backward from the Activity leads out of
 // your application to the Home screen.
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
 // Adds the back stack for the Intent (but not the Intent itself)
-            stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addParentStack(MainActivity.class);
 // Adds the Intent that starts the Activity to the top of the stack
-            stackBuilder.addNextIntent(resultIntent);
-            PendingIntent resultPendingIntent =
-                    stackBuilder.getPendingIntent(
-                            0,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
 
-            mBuilder.setContentIntent(resultPendingIntent);
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 // mId allows you to update the notification later on.
-            mNotificationManager.notify(0, mBuilder.build());
-
-            if (action.contains(Intent.ACTION_TIME_TICK)) {
-
-            }
-        }
-    };
+        mNotificationManager.notify(0, mBuilder.build());
+    }
 
     public void EraseBufferedQueries() {
         Log.d("db", "buffered cleared");
