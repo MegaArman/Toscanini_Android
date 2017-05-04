@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
 
-
-
-
         //Check if server is up and running otherwise inform user
         Log.d("Home", "Create the taskFragment.");
         taskFragment = (TaskFragment) fragmentManager.findFragmentByTag(TaskFragment.TAG_TASK_FRAGMENT);

@@ -30,25 +30,20 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
-
     }
+
     public TaskFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public void onResume() {
         super.onResume();
     }
-
 
     public String getActiveFragmentTag() {
         return mActiveFragmentTag;
@@ -71,7 +66,6 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
         return false;
     }
 
-
     @Override
     public void startBackgroundServiceNeeded() {
         // check if the background service is running, if not then start it
@@ -80,8 +74,5 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
             getActivity().startService(intent);
             Log.d("background_service", "BackgroundService  TOLD TO START!");
         }
-
     }
-
-
 }

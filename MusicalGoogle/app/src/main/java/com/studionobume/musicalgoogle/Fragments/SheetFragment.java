@@ -90,7 +90,6 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
 
         String temp = activity.getActivityData();
 
-        //TODO:
         if(temp == null) {
             queryTV.setText("No Query Entered.");
         }
@@ -106,10 +105,9 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
 
         urls = new ArrayList<String>();
 
-        //TODO: network request goes her
+        //Network Request
         Map<String, String> params = new HashMap<String, String>();
         params.put("composer", "");
-
 
         String enteredQuery = "";
         String completeURL = "";
@@ -125,7 +123,6 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
             Toast.makeText(MyApplication.getAppContext(), "please enter a search", Toast.LENGTH_LONG);
         }
         netWorker = netWorker.getSInstance(); //singleton
-
 
         NetWorker nw = NetWorker.getSInstance();
         nw.get(completeURL, new NetWorker.VolleyCallback() {
@@ -165,6 +162,4 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
             }
         });
     }
-
-
 }
