@@ -26,14 +26,10 @@ import com.studionobume.musicalgoogle.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-import static com.studionobume.musicalgoogle.Constants.Constants.url;
 
 /**
  * Created by Togame on 4/30/2017.
@@ -123,7 +119,7 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
         }
 
         if (!enteredQuery.isEmpty()) {
-            completeURL = Constants.url + enteredQuery.replace(" ", "_");
+            completeURL = Constants.URL + enteredQuery.replace(" ", "_");
         }
         else {
             Toast.makeText(MyApplication.getAppContext(), "please enter a search", Toast.LENGTH_LONG);
@@ -155,7 +151,7 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
                         String item = urlList.getItemAtPosition(position).toString();
                         Log.d("String", item);
                         activity.setUrl(item);
-                        String url = Constants.url.replace("/?=", "") +"/pdf_scores/" + activity.getUrl();
+                        String url = Constants.URL.replace("/?=", "") +"/pdf_scores/" + activity.getUrl();
                         Log.d("String", url);
                         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(launchBrowser);

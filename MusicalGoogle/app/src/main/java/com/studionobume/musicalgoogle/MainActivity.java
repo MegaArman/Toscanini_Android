@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.studionobume.musicalgoogle.Constants.Constants;
 import com.studionobume.musicalgoogle.Fragments.HomeScreenFragment;
 import com.studionobume.musicalgoogle.Fragments.QueryFragment;
 import com.studionobume.musicalgoogle.Fragments.SheetFragment;
@@ -60,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             queryFragment = fragmentManager.findFragmentByTag(QueryFragment.TAG_QUERY_FRAGMENT);
             ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(QueryFragment.TAG_QUERY_FRAGMENT);
         }
-        if(getIntent().getAction().equals("OPEN_RECENTLY_ADDED")) {
+
+        //If a notification being clicked got us here
+        if(getIntent().getAction().equals(Constants.NEW_SCORE_ACTION)) {
             this.changeFragment(QueryFragment.TAG_QUERY_FRAGMENT);
         }
         else {

@@ -5,6 +5,9 @@ package com.studionobume.musicalgoogle.Constants;
  */
 
 public class Constants {
-    public static String url = "http://mickey.cs.vt.edu:8001/?=";
-    public static String newFiles = "http://mickey.cs.vt.edu:8001/newfiles";
+    public static String URL = "http://mickey.cs.vt.edu:8001/?=";
+    public static String NEW_FILES_URL = "http://mickey.cs.vt.edu:8001/newfiles";
+    public static String NOTIFICATION_TITLE = "Ask Toscanini";
+    public static String NOTIFICATION_TEXT = "New Scores Added! Tap to see which!";
+    public static String NEW_SCORE_ACTION = "OPEN_RECENTLY_ADDED";
 }

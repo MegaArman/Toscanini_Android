@@ -65,7 +65,7 @@ public class BackgroundService extends Service {
 
             //check if there's new music:
             NetWorker nw = NetWorker.getSInstance();
-            nw.get(Constants.newFiles, new NetWorker.VolleyCallback() {
+            nw.get(Constants.NEW_FILES_URL, new NetWorker.VolleyCallback() {
                 @Override
                 public void onSuccess(String result) {
                     Log.d("success", result);
@@ -91,12 +91,12 @@ public class BackgroundService extends Service {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext())
                         .setSmallIcon(R.drawable.ic_a_c_d_notes)
-                        .setContentTitle("Toscanini")
-                        .setContentText("New scores added! Tap to see which!")
+                        .setContentTitle(Constants.NOTIFICATION_TITLE)
+                        .setContentText(Constants.NOTIFICATION_TEXT)
                         .setAutoCancel(true);
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-        resultIntent.setAction("OPEN_RECENTLY_ADDED");
+        resultIntent.setAction(Constants.NEW_SCORE_ACTION);
         PendingIntent.getService(getApplicationContext(), 0, resultIntent, 0);
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
