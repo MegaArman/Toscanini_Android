@@ -5,7 +5,7 @@ package com.studionobume.musicalgoogle.Interactions;
  */
 
 public interface RetainedFragmentInteraction {
-    public String getActiveFragmentTag();
-    public void setActiveFragmentTag(String s);
-    public void startBackgroundServiceNeeded();
+    String getActiveFragmentTag();
+    void setActiveFragmentTag(String s);
+    void startBackgroundServiceNeeded();
 }

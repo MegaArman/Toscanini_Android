@@ -26,14 +26,10 @@ import com.studionobume.musicalgoogle.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-import static com.studionobume.musicalgoogle.Constants.Constants.url;
 
 /**
  * Created by Togame on 4/30/2017.
@@ -90,16 +86,15 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View completeView = inflater.inflate(R.layout.all_sheet_layout, container, false);
-        TextView textView = (TextView) completeView.findViewById(R.id.queryView);
+        TextView queryTV = (TextView) completeView.findViewById(R.id.queryView);
 
         String temp = activity.getActivityData();
 
-        //TODO:
         if(temp == null) {
-            textView.setText("No Query Entered.");
+            queryTV.setText("No Query Entered.");
         }
         else {
-            textView.setText(temp);
+            queryTV.setText("Showing results for " + temp);
         }
         return completeView;
     }
@@ -110,21 +105,24 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
 
         urls = new ArrayList<String>();
 
-        //TODO: network request goes her
+        //Network Request
         Map<String, String> params = new HashMap<String, String>();
         params.put("composer", "");
 
-
-        String enteredQuery = activity.getActivityData().toString();
+        String enteredQuery = "";
         String completeURL = "";
+
+        if (activity.getActivityData() != null) {
+            enteredQuery = activity.getActivityData().toString();
+        }
+
         if (!enteredQuery.isEmpty()) {
-            completeURL = Constants.url + enteredQuery.replace(" ", "_");
+            completeURL = Constants.URL + enteredQuery.replace(" ", "_");
         }
         else {
             Toast.makeText(MyApplication.getAppContext(), "please enter a search", Toast.LENGTH_LONG);
         }
         netWorker = netWorker.getSInstance(); //singleton
-
 
         NetWorker nw = NetWorker.getSInstance();
         nw.get(completeURL, new NetWorker.VolleyCallback() {
@@ -150,7 +148,7 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
                         String item = urlList.getItemAtPosition(position).toString();
                         Log.d("String", item);
                         activity.setUrl(item);
-                        String url = Constants.url.replace("/?=", "") +"/pdf_scores/" + activity.getUrl();
+                        String url = Constants.URL.replace("/?=", "") +"/pdf_scores/" + activity.getUrl();
                         Log.d("String", url);
                         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(launchBrowser);
@@ -164,6 +162,4 @@ public class SheetFragment extends Fragment implements ListView.OnItemClickListe
             }
         });
     }
-
-
 }

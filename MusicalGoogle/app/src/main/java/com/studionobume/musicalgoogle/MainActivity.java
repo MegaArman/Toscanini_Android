@@ -3,28 +3,31 @@ package com.studionobume.musicalgoogle;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.studionobume.musicalgoogle.Constants.Constants;
+import com.studionobume.musicalgoogle.Fragments.AliasFragment;
 import com.studionobume.musicalgoogle.Fragments.HomeScreenFragment;
 import com.studionobume.musicalgoogle.Fragments.QueryFragment;
 import com.studionobume.musicalgoogle.Fragments.SheetFragment;
 import com.studionobume.musicalgoogle.Fragments.TaskFragment;
+import com.studionobume.musicalgoogle.Interactions.AliasFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.HomeScreenInteraction;
 import com.studionobume.musicalgoogle.Interactions.QueryFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.RetainedFragmentInteraction;
 import com.studionobume.musicalgoogle.Interactions.SheetFragmentInteraction;
 
-public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, QueryFragmentInteraction, SheetFragmentInteraction {
+public class MainActivity extends AppCompatActivity implements AliasFragmentInteraction, HomeScreenInteraction, QueryFragmentInteraction, SheetFragmentInteraction {
 
     private Fragment homeScreenFragment,taskFragment, sheetFragment , queryFragment;
-
     private FragmentManager fragmentManager;
     private String query;
     private String actual_url;
@@ -56,6 +59,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             sheetFragment = fragmentManager.findFragmentByTag(SheetFragment.TAG_SHEET_FRAGMENT);
             queryFragment = fragmentManager.findFragmentByTag(QueryFragment.TAG_QUERY_FRAGMENT);
             ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(QueryFragment.TAG_QUERY_FRAGMENT);
+        }
+
+        //If a notification being clicked got us here
+        if(getIntent().getAction().equals(Constants.NEW_SCORE_ACTION)) {
+            this.changeFragment(QueryFragment.TAG_QUERY_FRAGMENT);
+        }
+        else {
+            Log.d("the intent", "was "  + getIntent().getAction());
         }
     }
 
@@ -105,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         if(id == R.id.home) {
             this.changeFragment(HomeScreenFragment.TAG_HOME_FRAGMENT);
             Log.d("Home", "Switching to HomeFragment");
+        }
+        if(id == R.id.Instructions) {
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.INSTRUCTION_URL));
+            startActivity(launchBrowser);
         }
         return super.onOptionsItemSelected(item);
     }
